@@ -80,9 +80,8 @@ $.getJSON(url,ble,function(data){
 var url = "http://127.0.0.1:8086/ble?callback=?";
 var ble = {
 	address : "56:a3:b3:et:a0:e1",
-	resource : "/peripherals/buzzer",
-	operation : "write",
-	value : "00fec7"
+	resource : "/sensors/temperature",
+	operation : "read"
 };
 
 $.getJSON(url,ble,function(data){
