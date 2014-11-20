@@ -1,142 +1,67 @@
-<!DOCTYPE html> <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]--> 
-<html class="no-js" lang="en" >
-	<head>
-	 <meta charset="utf-8">
-	 <!-- If you delete this meta tag World War Z will become a reality -->
-	 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-	 <title></title> 
-	 <link rel="stylesheet" href="css/normalize.css"> 
-	 <link rel="stylesheet" href="css/foundation.min.css"> 
-	 <style type="text/css">
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>temperature by yanwang0819</title>
 
-		 *{
-			 -webkit-tap-highlight-color:krgba(255,255,255,0);
-		 }
-		 
-		 .row_1 {
-		 	padding:2.5rem 0.8rem;
-		 	overflow-x: hidden;
-		 	overflow-y: auto;
-		 }
-		 
-		 .new_panel{
-			 margin-bottom: 0.5rem;
-			 padding: 0.5rem;
-		 }
-		 
-		 .p_center{
-			 text-align: center;
-			 font-size: 0.55rem;
-		 }
-		 
-		 .close_btn{
-		 	display: none;
-			position: absolute;
-			z-index: 999;
-			top:-0.7rem;
-			left:0.5rem;
-			width:100%;
-			height:100%;
-			-webkit-tap-highlight-color:rgba(255,255,255,0);
-		 };		 
-	 </style>
-	 <script src="js/modernizr.js"></script> 
-	 </head> 
-	 <body> 
-	 <!-- body content here -->
-      <div class="row row_1">        
-        <div id="addNew" class="large-3 small-3 columns" style="float:left;">
-          <img src="img/addNew.png" style="border:1px solid #ccc" >
-        </div>
-        
-      </div>
-	    
-	  <script type="text/javascript" src="js/jquery.js"></script> 
-	  <script type="text/javascript" src="js/foundation.min.js"></script>
-	  <script type="text/javascript" src="js/sql.js"></script>
-	  <script type="text/javascript">
-	  
-	  	  var isFirstTime = true;
-	  	  
-	  	  if(localStorage['isFirstTime']=='false'){
-		  	  isFirstTime = false;
-	  	  }
-	  	  
-		  $(function(){
-		    
-		    if(isFirstTime){
-		      DataBase.init();
-		      DataBase.getCount(function(result){
-			      if(result.rows.item(0).count==0){						 	
-			  	  	  DataBase.insert(['温度计','temperature.html','img/temperature.png']);
-				  	  DataBase.insert(['调光灯','rgblight.html','img/rgblight.jpg']);
-				  	  DataBase.insert(['蜂鸣器','buzzer.html','img/buzzer.jpg']);     
-			      }
-		      });
-		  	  localStorage['isFirstTime'] = !isFirstTime;
-		  	}
-		  	
-		  	$(document).click(function(){
-			  	$('.close_btn').css('display','none');
-		  	});
-		  	
-		  	DataBase.query(function(result){
-			  	var length = result.rows.length;
-			  	
-			  	for(var i=0;i<length;i++){
-				  	var app = $('<div class="large-3 small-3 columns">'+
-				  	    '<img src="'+result.rows.item(i).img+'">'+
-				  		'<div class="new_panel">'+
-				  			'<p class="p_center">'+result.rows.item(i).name+'</p>'+
-				  		'</div>'+
-				  		'<div  class="close_btn">'+
-				  			'<img src="img/close_btn.png" />'+
-				  		'</div>'+
-				  	  '</div>'
-				  	);
-				  	
-				  	(function(i){
-				  		var img = app.children('img');
-					  	
-				  		img.click(function(event){
-					  		event.stopPropagation();
-						  	location.href=result.rows.item(i).address;
-					  	});
-					  	
-					  	var touchEvent_interval=[];
-					  	
-					  	img[0].addEventListener('touchstart',function(event){
-						  	touchEvent_interval[i]=setTimeout(function(){
-							  $('.close_btn').css('display','block');	
-						  	},1500);
-					  	});
-					  	
-					  	img[0].addEventListener('touchend',function(event){
-						  	window.clearInterval(touchEvent_interval[i]);
-					  	});
-					  	
-				  	})(i);
-				  	
-				  	app.insertBefore('#addNew');
-				  		  
-				  	$('.close_btn').click(function(event){
-				  		event.stopPropagation();
-				  	});
-				  	
-				  	(function(i){
-					  	app.children('.close_btn').children('img').click(function(event){
-					  		event.stopPropagation();
-						  	$(this).parent().parent().remove();
-						  	DataBase.del([result.rows.item(i).id]);
-					  	});
-				  	})(i);
-			  	}
-		  	},function(error){
-			  	console.log(error.message);
-		  	});
-		  	
-		  	
-		  });
-	  </script>
-	</body> 
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="without-description">
+        <h1>temperature</h1>
+        <p></p>
+        <p class="view"><a href="https://github.com/yanwang0819/apps">View the Project on GitHub <small>yanwang0819/apps</small></a></p>
+        <ul>
+          <li><a href="https://github.com/yanwang0819/apps/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/yanwang0819/apps/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/yanwang0819/apps">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="注册帐号" class="anchor" href="#%E6%B3%A8%E5%86%8C%E5%B8%90%E5%8F%B7" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/xudChen/apps">注册帐号</a>
+</h1>
+
+<p>单击标题可进行帐号注册</p>
+
+<h2>
+<a id="demo-fork" class="anchor" href="#demo-fork" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>demo fork</strong>
+</h2>
+
+<p>已登录状态下，选择你的账户，将demo Fork到自己的账号下</p>
+
+<h3>
+<a id="提交发布" class="anchor" href="#%E6%8F%90%E4%BA%A4%E5%8F%91%E5%B8%83" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>提交发布</strong>
+</h3>
+
+<p><em>publish</em>
+<img src="http://image.baidu.com/i?ct=503316480&amp;z=0&amp;tn=baiduimagedetail&amp;ipn=d&amp;word=%E5%9B%BE%E6%A0%87&amp;step_word=&amp;pn=2&amp;spn=0&amp;di=136198448650&amp;rn=1&amp;is=&amp;istype=2&amp;ie=utf-8&amp;oe=utf-8&amp;in=1372&amp;cl=2&amp;lm=-1&amp;st=-1&amp;cs=3454535740%2C4148430144&amp;os=3386798671%2C3545271038&amp;adpicid=0&amp;ln=1000&amp;fr=&amp;fmq=1416452819379_R&amp;ic=0&amp;s=&amp;se=1&amp;sme=0&amp;tab=&amp;width=&amp;height=&amp;face=0&amp;ist=&amp;jit=&amp;cg=&amp;objurl=http%3A%2F%2Fpic6.nipic.com%2F20100318%2F2665563_172420657326_2.jpg&amp;fromurl=ippr_z2C%24qAzdH3FAzdH3Fooo_z%26e3Bgtrtv_z%26e3Bv54AzdH3Ffi5oAzdH3FnAzdH3Fb8AzdH3F0adkbkj190l1malu_z%26e3Bip4s" alt="图标"></p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/yanwang0819">yanwang0819</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-010010-02");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
 </html>
